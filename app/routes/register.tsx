@@ -1,7 +1,13 @@
 import { ActionArgs } from "@remix-run/node";
+import { Form } from "@remix-run/react";
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const password = formData.get("password");
+  console.log(name, email, password);
+  return null
 
 }
 
@@ -19,7 +25,7 @@ export default function Register() {
             <li>That email is already taken</li>
           </ul>
 
-          <form>
+          <Form method={'post'}>
             <fieldset className="form-group">
               <input className="form-control form-control-lg"
                      type="text"
@@ -39,7 +45,7 @@ export default function Register() {
               />
             </fieldset>
             <button className="btn btn-lg btn-primary pull-xs-right">Sign up</button>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
