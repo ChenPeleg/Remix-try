@@ -1,14 +1,33 @@
-import { ActionArgs } from "@remix-run/node";
+import { ActionArgs, json, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
+import { z } from "zod";
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
 
   const name = formData.get("name");
   const email = formData.get("email");
+
   const password = formData.get("password");
-  console.log(name, email, password);
-  return null
+  const CreateUserSchema = z.object({
+    name : z.string().min(3),
+    email : z.string().email(),
+    password : z.string().min(3).max(20)
+  })
+  try {
+
+  if (await CreateUserSchema.parseAsync({ name, email, password })){
+    return redirect('/')
+  }
+  } catch (err) {
+    if (err instanceof z.ZodError){
+      return json({errors : err.flatten().fieldErrors}, {status : 402})
+    }
+    return json(null, {status: 500})
+  }
+
+
+
 
 }
 
