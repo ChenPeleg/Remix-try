@@ -1,6 +1,9 @@
 import { ActionArgs, json, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { z } from "zod";
+import { PrismaClient } from ".prisma/client";
+import bcrypt from "bcryptjs";
+
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
@@ -10,23 +13,30 @@ export async function action({ request }: ActionArgs) {
 
   const password = formData.get("password");
   const CreateUserSchema = z.object({
-    name : z.string().min(3),
-    email : z.string().email(),
-    password : z.string().min(3).max(20)
-  })
+    name: z.string().min(3),
+    email: z.string().email(),
+    password: z.string().min(3).max(20)
+  });
   try {
+    const validateObject = await CreateUserSchema.parseAsync({ name, email, password });
 
-  if (await CreateUserSchema.parseAsync({ name, email, password })){
-    return redirect('/')
-  }
-  } catch (err) {
-    if (err instanceof z.ZodError){
-      return json({errors : err.flatten().fieldErrors}, {status : 402})
+    const db = new PrismaClient();
+    await db.user.create({
+      data: {
+        name: validateObject.name,
+        password: await bcrypt.hash(validateObject.password, 10),
+        email: validateObject.email
+      }
+    });
+    return redirect("/");
+
+  } catch
+    (err) {
+    if (err instanceof z.ZodError) {
+      return json({ errors: err.flatten().fieldErrors }, { status: 402 });
     }
-    return json(null, {status: 500})
+    return json(null, { status: 500 });
   }
-
-
 
 
 }
@@ -46,7 +56,7 @@ export default function Register() {
             <li>That email is already taken</li>
           </ul>
 
-          <Form method={'post'}>
+          <Form method={"post"}>
             <fieldset className="form-group">
               <input className="form-control form-control-lg"
                      type="text"

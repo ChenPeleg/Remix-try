@@ -4,14 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="installed prisma">
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added prisma">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -32,6 +42,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Projects/Remix-try",
@@ -78,7 +89,7 @@
       <updated>1684394323698</updated>
       <workItem from="1684394324767" duration="11000" />
       <workItem from="1684395389605" duration="5436000" />
-      <workItem from="1684401126222" duration="2126000" />
+      <workItem from="1684401126222" duration="2908000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -143,13 +154,28 @@
       <option name="project" value="LOCAL‎" />
       <updated>1684403459958</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL‎-00010" summary="added prisma schema">
+      <created>1684403559438</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL‎-00010" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1684403559438</updated>
+    </task>
+    <task id="LOCAL‎-00011" summary="added prisma">
+      <created>1684403609099</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL‎-00011" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1684403609099</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="added navlinks" />
     <MESSAGE value="added is active class" />
     <MESSAGE value="added clsx" />
@@ -159,6 +185,8 @@
     <MESSAGE value="installed zod" />
     <MESSAGE value="added zod validation" />
     <MESSAGE value="installed prisma" />
-    <option name="LAST_COMMIT_MESSAGE" value="installed prisma" />
+    <MESSAGE value="added prisma schema" />
+    <MESSAGE value="added prisma" />
+    <option name="LAST_COMMIT_MESSAGE" value="added prisma" />
   </component>
 </project>
