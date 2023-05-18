@@ -3,7 +3,7 @@ import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
-  Meta,
+  Meta, NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -30,16 +30,14 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-        <nav className="navbar navbar-light">
+      <nav className="navbar navbar-light">
+
+
       <div className="container">
         <a className="navbar-brand" href="index.html">conduit</a>
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
-      
+
             <a className="nav-link active" href="">Home</a>
           </li>
           <li className="nav-item">
@@ -49,14 +47,32 @@ export default function App() {
             <a className="nav-link" href=""> <i className="ion-gear-a"></i>&nbsp;Settings </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="">Sign in</a>
+
+            <NavLink className={({isActive})=> isActive ? 'active': 'not-active'} to={"/register"}>
+              Sign in
+            </NavLink>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="">Sign up</a>
           </li>
         </ul>
       </div>
-    </nav>
+      </nav>
+
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+
+    <footer>
+  <div className="container">
+    <a href="/" className="logo-font">conduit</a>
+    <span className="attribution">
+      An interactive learning project from <a href="https://thinkster.io">Thinkster</a>. Code &amp;
+      design licensed under MIT.
+    </span>
+  </div>
+</footer>
       </body>
     </html>
   );
