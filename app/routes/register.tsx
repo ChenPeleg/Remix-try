@@ -32,6 +32,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function Register() {
+
   return (<div className="auth-page">
     <div className="container page">
       <div className="row">
