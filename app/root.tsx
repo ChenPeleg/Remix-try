@@ -48,7 +48,7 @@ export default function App() {
           </li>
           <li className="nav-item">
 
-            <NavLink className={({isActive})=> isActive ? 'active': 'not-active'} to={"/register"}>
+            <NavLink className={({isActive})=> isActive ? 'active': ''} to={"/register"}>
               Sign in
             </NavLink>
           </li>
