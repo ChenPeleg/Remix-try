@@ -53,16 +53,20 @@ export default function App() {
                         <a className="nav-link" href=""> <i className="ion-gear-a"></i>&nbsp;Settings </a>
                     </li>
                     <li className="nav-item">
-
                         <NavLink className={({isActive}) => {
-                            return clsx('nav-links', isActive && 'isActive')
+                            return clsx('nav-link', isActive && 'isActive')
 
                         }} to={"/register"}>
-                            Sign in
+                            Sign up
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="">Sign up</a>
+                        <NavLink className={({isActive}) => {
+                            return clsx('nav-link', isActive && 'isActive')
+
+                        }} to={"/login"}>
+                            Log in
+                        </NavLink>
                     </li>
                 </ul>
             </div>
