@@ -4,43 +4,81 @@ import { z } from "zod";
 import { PrismaClient } from ".prisma/client";
 import bcrypt from "bcryptjs";
 
+import { commitSession, getSession } from '~/lib/session.server'
 
 export async function action({ request }: ActionArgs) {
-  const formData = await request.formData();
+  const formData = await request.formData()
 
-  const name = formData.get("name");
-  const email = formData.get("email");
+  const name = formData.get('name')
+  const email = formData.get('email')
+  const password = formData.get('password')
 
-  const password = formData.get("password");
   const CreateUserSchema = z.object({
-    name: z.string().min(3),
-    email: z.string().email(),
-    password: z.string().min(3).max(20)
-  });
+    name: z
+      .string()
+      .min(1, { message: "can't be blank" })
+      .min(2, { message: "can't be less than 2 chars" }),
+    email: z.string().min(1, { message: "can't be blank" }).email(),
+    password: z
+      .string()
+      .min(1, { message: "can't be blank" })
+      .min(6, { message: "can't be less than 6 chars" })
+      .max(20, { message: "can't be more than 20 chars" })
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/, {
+        message:
+          'must contain at least one lower case, one capital case, one number and one symbol',
+      }),
+  })
+
+  const session = await getSession(request.headers.get('Cookie'))
+
   try {
-    const validateObject = await CreateUserSchema.parseAsync({ name, email, password });
+    const validated = await CreateUserSchema.parseAsync({
+      name,
+      email,
+      password,
+    })
 
-    const db = new PrismaClient();
-    await db.user.create({
+    const db = new PrismaClient()
+
+    const user = await db.user.create({
       data: {
-        name: validateObject.name,
-        password: await bcrypt.hash(validateObject.password, 10),
-        email: validateObject.email
-      }
-    });
-    return redirect("/");
+        email: validated.email,
+        name: validated.name,
+        password: await bcrypt.hash(validated.password, 10),
+      },
+    })
 
-  } catch
-    (err) {
-    if (err instanceof z.ZodError) {
-      return json({ errors: err.flatten().fieldErrors }, { status: 402 });
+    session.set('userId', user.id)
+
+    session.flash(
+      'success',
+      'You are now successfully registered! Welcome to Conduit'
+    )
+
+    return redirect('/', {
+      headers: {
+        'Set-Cookie': await commitSession(session),
+      },
+    })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return json({ errors: error.flatten().fieldErrors }, { status: 422 })
     }
-    return json(null, { status: 500 });
+
+    session.flash('error', 'Registration failed')
+
+    return json(
+      { errors: {} },
+      {
+        status: 400,
+        headers: {
+          'Set-Cookie': await commitSession(session),
+        },
+      }
+    )
   }
-
-
 }
-
 export default function Register() {
 
   return (<div className="auth-page">

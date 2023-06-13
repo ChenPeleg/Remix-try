@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added settings">
-      <change afterPath="$PROJECT_DIR$/app/lib/session.server.ts" afterDir="false" />
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added session server ts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/register.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +89,7 @@
       <workItem from="1684401126222" duration="3584000" />
       <workItem from="1684410657722" duration="67000" />
       <workItem from="1684913005969" duration="5191000" />
-      <workItem from="1686677825537" duration="693000" />
+      <workItem from="1686677825537" duration="1644000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -189,7 +189,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1686678448328</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL‎-00015" summary="added session server ts">
+      <created>1686678536724</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL‎-00015" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1686678536724</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +218,7 @@
     <MESSAGE value="added bcrypt and types" />
     <MESSAGE value="added bcrypt and types 2" />
     <MESSAGE value="added settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="added settings" />
+    <MESSAGE value="added session server ts" />
+    <option name="LAST_COMMIT_MESSAGE" value="added session server ts" />
   </component>
 </project>
