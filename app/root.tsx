@@ -92,6 +92,16 @@ export default function App() {
                           Home
                       </NavLink>
                   </li>
+                <li className="nav-item">
+                  <NavLink
+                    className={({ isActive }) =>
+                      clsx('nav-link', isActive && 'active')
+                    }
+                    to="/settings"
+                  >
+                    Settings
+                  </NavLink>
+                </li>
                   <li className="nav-item">
                       <a className="nav-link" href="">
                           {' '}
