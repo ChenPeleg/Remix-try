@@ -11,6 +11,8 @@ import {
 import clsx from "clsx";
 
 
+
+
 export const links: LinksFunction = () => [
     {
         href: "//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css",
@@ -66,6 +68,16 @@ export default function App() {
 
                         }} to={"/login"}>
                             Log in
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                          className={({ isActive }) =>
+                            clsx('nav-link', isActive && 'active')
+                          }
+                          to="/settings"
+                        >
+                            Settings
                         </NavLink>
                     </li>
                 </ul>
