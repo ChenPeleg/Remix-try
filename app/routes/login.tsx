@@ -4,33 +4,78 @@ import { z } from "zod";
 import { PrismaClient } from ".prisma/client";
 import bcrypt from "bcryptjs";
 
+import { commitSession, getSession } from '~/lib/session.server'
+
 export async function action({ request }: ActionArgs) {
-  const formData = await request.formData();
+  const formData = await request.formData()
 
-  const name = formData.get("name");
-  const email = formData.get("email");
+  const email = formData.get('email')
+  const password = formData.get('password')
 
-  const password = formData.get("password");
-  const CreateUserSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(3).max(20)
-  });
+  const LoginUserSchema = z.object({
+    email: z.string().min(1, { message: "can't be blank" }).email(),
+    password: z.string().min(1, { message: "can't be blank" }),
+  })
+
+  const session = await getSession(request.headers.get('Cookie'))
+
   try {
-    const validateObject = await CreateUserSchema.parseAsync({ name, email, password });
+    const validated = await LoginUserSchema.parseAsync({ email, password })
 
-    const db = new PrismaClient();
+    const db = new PrismaClient()
 
-    return redirect("/");
+    const user = await db.user.findFirst({ where: { email: validated.email } })
 
-  } catch
-    (err) {
-    if (err instanceof z.ZodError) {
-      return json({ errors: err.flatten().fieldErrors }, { status: 402 });
+    if (!user) {
+      return json(
+        {
+          errors: {
+            'email or password': ['is invalid'],
+          },
+        },
+        { status: 422 }
+      )
     }
-    return json(null, { status: 500 });
+
+    const match = await bcrypt.compare(validated.password, user.password)
+
+    if (!match) {
+      return json(
+        {
+          errors: {
+            'email or password': ['is invalid'],
+          },
+        },
+        { status: 422 }
+      )
+    }
+
+    session.set('userId', user.id)
+
+    session.flash('success', `Welcome back ${user.name}!`)
+
+    return redirect('/', {
+      headers: {
+        'Set-Cookie': await commitSession(session),
+      },
+    })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return json({ errors: error.flatten().fieldErrors }, { status: 422 })
+    }
+
+    session.flash('error', 'Login failed')
+
+    return json(
+      { errors: {} },
+      {
+        status: 400,
+        headers: {
+          'Set-Cookie': await commitSession(session),
+        },
+      }
+    )
   }
-
-
 }
 
 export default function Login() {
