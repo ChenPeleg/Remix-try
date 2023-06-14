@@ -4,14 +4,14 @@ import { z } from "zod";
 import { PrismaClient } from ".prisma/client";
 import bcrypt from "bcryptjs";
 
-import { commitSession, getSession } from '~/lib/session.server'
+import { commitSession, getSession } from "~/lib/session.server";
 
 export async function action({ request }: ActionArgs) {
-  const formData = await request.formData()
+  const formData = await request.formData();
 
-  const name = formData.get('name')
-  const email = formData.get('email')
-  const password = formData.get('password')
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const password = formData.get("password");
 
   const CreateUserSchema = z.object({
     name: z
@@ -26,59 +26,61 @@ export async function action({ request }: ActionArgs) {
       .max(20, { message: "can't be more than 20 chars" })
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/, {
         message:
-          'must contain at least one lower case, one capital case, one number and one symbol',
-      }),
-  })
+          "must contain at least one lower case, one capital case, one number and one symbol"
+      })
+  });
 
-  const session = await getSession(request.headers.get('Cookie'))
+  const session = await getSession(request.headers.get("Cookie"));
 
   try {
     const validated = await CreateUserSchema.parseAsync({
       name,
       email,
-      password,
-    })
+      password
+    });
 
-    const db = new PrismaClient()
+    const db = new PrismaClient();
 
     const user = await db.user.create({
       data: {
         email: validated.email,
         name: validated.name,
-        password: await bcrypt.hash(validated.password, 10),
-      },
-    })
+        password: await bcrypt.hash(validated.password, 10)
+      }
+    });
 
-    session.set('userId', user.id)
+    session.set("userId", user.id);
 
     session.flash(
-      'success',
-      'You are now successfully registered! Welcome to Conduit'
-    )
+      "success",
+      "You are now successfully registered! Welcome to Conduit"
+    );
 
-    return redirect('/', {
+    return redirect("/", {
       headers: {
-        'Set-Cookie': await commitSession(session),
-      },
-    })
+        "Set-Cookie": await commitSession(session)
+      }
+    });
   } catch (error) {
+    console.error(error);
     if (error instanceof z.ZodError) {
-      return json({ errors: error.flatten().fieldErrors }, { status: 422 })
+      return json({ errors: error.flatten().fieldErrors }, { status: 422 });
     }
 
-    session.flash('error', 'Registration failed')
+    session.flash("error", "Registration failed");
 
     return json(
       { errors: {} },
       {
         status: 400,
         headers: {
-          'Set-Cookie': await commitSession(session),
-        },
+          "Set-Cookie": await commitSession(session)
+        }
       }
-    )
+    );
   }
 }
+
 export default function Register() {
 
   return (<div className="auth-page">
