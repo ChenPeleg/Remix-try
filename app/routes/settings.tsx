@@ -1,37 +1,37 @@
-import { PrismaClient } from '@prisma/client'
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { Form, useActionData, useLoaderData } from '@remix-run/react'
-import { z } from 'zod'
-import { getSession } from '~/lib/session.server'
+import { PrismaClient } from "@prisma/client";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { z } from "zod";
+import { getSession } from "~/lib/session.server";
 
 export async function loader({ request }: LoaderArgs) {
-  const session = await getSession(request.headers.get('Cookie'))
+  const session = await getSession(request.headers.get("Cookie"));
+  console.log(session.get("userId"));
+  const userId = session.get("userId");
 
-  const userId = session.get('userId')
+  const db = new PrismaClient();
 
-  const db = new PrismaClient()
-
-  const user = await db.user.findUnique({ where: { id: userId } })
+  const user = await db.user.findUnique({ where: { id: userId } });
 
   return json({
     user: {
       name: user?.name,
       email: user?.email,
       avatar: user?.avatar,
-      bio: user?.bio,
-    },
-  })
+      bio: user?.bio
+    }
+  });
 }
 
 export async function action({ request }: ActionArgs) {
-  const formData = await request.formData()
+  const formData = await request.formData();
 
-  const name = formData.get('name')
-  const email = formData.get('email')
-  const avatar = formData.get('avatar')
-  const bio = formData.get('bio')
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const avatar = formData.get("avatar");
+  const bio = formData.get("bio");
 
   const UpdateUserSchema = z.object({
     name: z
@@ -40,43 +40,43 @@ export async function action({ request }: ActionArgs) {
       .min(2, { message: "can't be less than 2 chars" }),
     email: z.string().min(1, { message: "can't be blank" }).email(),
     avatar: z.string().url(),
-    bio: z.string().optional(),
-  })
+    bio: z.string().optional()
+  });
 
   try {
     const validated = await UpdateUserSchema.parseAsync({
       email,
       name,
       bio,
-      avatar,
-    })
+      avatar
+    });
 
-    const session = await getSession(request.headers.get('Cookie'))
+    const session = await getSession(request.headers.get("Cookie"));
 
-    const userId = session.get('userId')
+    const userId = session.get("userId");
 
-    const db = new PrismaClient()
+    const db = new PrismaClient();
 
-    await db.user.update({ where: { id: userId }, data: validated })
+    await db.user.update({ where: { id: userId }, data: validated });
 
-    return redirect('/')
+    return redirect("/");
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return json({ errors: error.flatten().fieldErrors }, { status: 422 })
+      return json({ errors: error.flatten().fieldErrors }, { status: 422 });
     }
 
     return json(
       { errors: {} },
       {
-        status: 400,
+        status: 400
       }
-    )
+    );
   }
 }
 
 export default function Settings() {
-  const loaderData = useLoaderData<typeof loader>()
-  const actionData = useActionData<typeof action>()
+  const loaderData = useLoaderData<typeof loader>();
+  const actionData = useActionData<typeof action>();
 
   return (
     <div className="settings-page">
@@ -119,7 +119,7 @@ export default function Settings() {
                     rows={8}
                     placeholder="Short bio about you"
                     name="bio"
-                    defaultValue={loaderData.user.bio || ''}
+                    defaultValue={loaderData.user.bio || ""}
                   ></textarea>
                 </fieldset>
                 <fieldset className="form-group">
@@ -151,5 +151,5 @@ export default function Settings() {
         </div>
       </div>
     </div>
-  )
+  );
 }
