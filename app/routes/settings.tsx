@@ -8,7 +8,7 @@ import { getSession } from "~/lib/session.server";
 
 export async function loader({ request }: LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
-  console.log(session.get("userId"));
+
   const userId = session.get("userId");
 
   const db = new PrismaClient();

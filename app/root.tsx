@@ -109,6 +109,14 @@ export default function App() {
                       </a>
                   </li>
                   {loaderData.user?.id ? (
+                    <>  <NavLink
+                      className={({ isActive }) =>
+                        clsx('nav-link', isActive && 'active')
+                      }
+                      to="/login"
+                    >
+                      Logout
+                    </NavLink>
                     <li className="nav-item">
                         <a className="nav-link" href="#/@romansandler">
                             <img
@@ -119,6 +127,7 @@ export default function App() {
                             {loaderData.user.name}
                         </a>
                     </li>
+                    </>
                   ) : (
                     <>
                         <li className="nav-item">
@@ -131,6 +140,10 @@ export default function App() {
                                 Sign in
                             </NavLink>
                         </li>
+                      {loaderData.user?.id  ?     <li className="nav-item">
+
+                      </li> : <></>}
+
                         <li className="nav-item">
                             <NavLink
                               className={({ isActive }) =>
