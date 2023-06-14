@@ -109,24 +109,16 @@ export default function App() {
                       </a>
                   </li>
                   {loaderData.user?.id ? (
-                    <>  <NavLink
-                      className={({ isActive }) =>
-                        clsx('nav-link', isActive && 'active')
-                      }
-                      to="/login"
-                    >
-                      Logout
-                    </NavLink>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#/@romansandler">
-                            <img
-                              className="user-pic"
-                              src="https://api.realworld.io/images/smiley-cyrus.jpeg"
-                              alt=""
-                            />
-                            {loaderData.user.name}
-                        </a>
-                    </li>
+                    <>
+                      <NavLink
+                        className={({ isActive }) =>
+                          clsx('nav-link', isActive && 'active')
+                        }
+                        to="/logout"
+                      >
+                        Logout
+                      </NavLink>
+
                     </>
                   ) : (
                     <>
@@ -140,9 +132,7 @@ export default function App() {
                                 Sign in
                             </NavLink>
                         </li>
-                      {loaderData.user?.id  ?     <li className="nav-item">
 
-                      </li> : <></>}
 
                         <li className="nav-item">
                             <NavLink
