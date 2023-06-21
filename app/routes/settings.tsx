@@ -1,17 +1,16 @@
-import { PrismaClient } from "@prisma/client";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
 import { getSession } from "~/lib/session.server";
+import { ErrorMessages } from "~/components/error-messages";
+import { db } from "~/lib/db.server";
 
 export async function loader({ request }: LoaderArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
+  const session = await getSession(request);
 
   const userId = session.get("userId");
-
-  import { db } from "~/db.server";
 
   const user = await db.user.findUnique({ where: { id: userId } });
 
@@ -51,11 +50,9 @@ export async function action({ request }: ActionArgs) {
       avatar,
     });
 
-    const session = await getSession(request.headers.get("Cookie"));
+    const session = await getSession(request);
 
     const userId = session.get("userId");
-
-    import { db } from "~/db.server";
 
     await db.user.update({ where: { id: userId }, data: validated });
 
@@ -84,15 +81,9 @@ export default function Settings() {
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Your Settings</h1>
-            {actionData && (
-              <ul className="error-messages">
-                {Object.entries(actionData.errors).map(([key, messages]) => (
-                  <li key={key}>
-                    {key} {Array.isArray(messages) ? messages[0] : messages}
-                  </li>
-                ))}
-              </ul>
-            )}
+            {actionData && actionData.errors ? (
+              <ErrorMessages errors={actionData.errors} />
+            ) : null}
             <Form method="POST">
               <fieldset>
                 <fieldset className="form-group">

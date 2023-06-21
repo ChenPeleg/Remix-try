@@ -1,8 +1,8 @@
 import { ActionArgs, json, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { z } from "zod";
-import { PrismaClient } from ".prisma/client";
 import bcrypt from "bcryptjs";
+import { db } from "~/lib/db.server";
 
 import { commitSession, getSession } from "~/lib/session.server";
 
@@ -38,8 +38,6 @@ export async function action({ request }: ActionArgs) {
       email,
       password,
     });
-
-    import { db } from "~/db.server";
 
     const user = await db.user.create({
       data: {

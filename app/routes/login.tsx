@@ -1,7 +1,7 @@
 import { Form } from "@remix-run/react";
 import { ActionArgs, json, redirect } from "@remix-run/node";
 import { z } from "zod";
-import { PrismaClient } from ".prisma/client";
+import { db } from "~/lib/db.server";
 import bcrypt from "bcryptjs";
 
 import { commitSession, getSession } from "~/lib/session.server";
@@ -21,8 +21,6 @@ export async function action({ request }: ActionArgs) {
 
   try {
     const validated = await LoginUserSchema.parseAsync({ email, password });
-
-    import { db } from "~/db.server";
 
     const user = await db.user.findFirst({ where: { email: validated.email } });
 

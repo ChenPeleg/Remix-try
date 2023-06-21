@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="installed preittier">
-      <change beforePath="$PROJECT_DIR$/app/lib/session.storage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/db.server.ts" afterDir="false" />
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="replaced db from prisma client">
+      <change afterPath="$PROJECT_DIR$/app/components/error-messages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/logout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/logout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/settings.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +99,7 @@
       <workItem from="1686680554878" duration="21000" />
       <workItem from="1686726726483" duration="6870000" />
       <workItem from="1687326127245" duration="185000" />
-      <workItem from="1687328376226" duration="1472000" />
+      <workItem from="1687328376226" duration="1844000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -292,7 +297,21 @@
       <option name="project" value="LOCAL‎" />
       <updated>1687329872380</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL‎-00029" summary="added db server">
+      <created>1687329928366</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL‎-00029" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687329928366</updated>
+    </task>
+    <task id="LOCAL‎-00030" summary="replaced db from prisma client">
+      <created>1687329986749</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL‎-00030" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687329986749</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,8 +319,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added clsx" />
-    <MESSAGE value="added prettier" />
     <MESSAGE value="added prettier 2" />
     <MESSAGE value="added uppercase form" />
     <MESSAGE value="installed zod" />
@@ -325,6 +342,8 @@
     <MESSAGE value="added logout 2" />
     <MESSAGE value="added logout  refactored get session" />
     <MESSAGE value="installed preittier" />
-    <option name="LAST_COMMIT_MESSAGE" value="installed preittier" />
+    <MESSAGE value="added db server" />
+    <MESSAGE value="replaced db from prisma client" />
+    <option name="LAST_COMMIT_MESSAGE" value="replaced db from prisma client" />
   </component>
 </project>
