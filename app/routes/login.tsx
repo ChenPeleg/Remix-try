@@ -5,6 +5,7 @@ import { db } from "~/lib/db.server";
 import bcrypt from "bcryptjs";
 
 import { commitSession, getSession } from "~/lib/session.server";
+import { handleExceptions } from "~/lib/http.server";
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
@@ -51,28 +52,19 @@ export async function action({ request }: ActionArgs) {
     session.set("userId", user.id);
 
     session.flash("success", `Welcome back ${user.name}!`);
+    const url = new URL(request.url);
 
-    return redirect("/", {
+    const next = url.searchParams.get("next");
+
+    return redirect(next || "/", {
       headers: {
         "Set-Cookie": await commitSession(session),
       },
     });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return json({ errors: error.flatten().fieldErrors }, { status: 422 });
-    }
-
     session.flash("error", "Login failed");
 
-    return json(
-      { errors: {} },
-      {
-        status: 400,
-        headers: {
-          "Set-Cookie": await commitSession(session),
-        },
-      }
-    );
+    return handleExceptions(error);
   }
 }
 

@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { db } from "~/lib/db.server";
 
 import { commitSession, getSession } from "~/lib/session.server";
+import { handleExceptions } from "~/lib/http.server";
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
@@ -60,22 +61,10 @@ export async function action({ request }: ActionArgs) {
       },
     });
   } catch (error) {
-    console.error(error);
-    if (error instanceof z.ZodError) {
-      return json({ errors: error.flatten().fieldErrors }, { status: 422 });
-    }
-
     session.flash("error", "Registration failed");
+    session.flash("error", "Login failed");
 
-    return json(
-      { errors: {} },
-      {
-        status: 400,
-        headers: {
-          "Set-Cookie": await commitSession(session),
-        },
-      }
-    );
+    return handleExceptions(error);
   }
 }
 
