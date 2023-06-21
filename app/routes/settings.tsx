@@ -11,7 +11,7 @@ export async function loader({ request }: LoaderArgs) {
 
   const userId = session.get("userId");
 
-  const db = new PrismaClient();
+  import { db } from "~/db.server";
 
   const user = await db.user.findUnique({ where: { id: userId } });
 
@@ -20,8 +20,8 @@ export async function loader({ request }: LoaderArgs) {
       name: user?.name,
       email: user?.email,
       avatar: user?.avatar,
-      bio: user?.bio
-    }
+      bio: user?.bio,
+    },
   });
 }
 
@@ -40,7 +40,7 @@ export async function action({ request }: ActionArgs) {
       .min(2, { message: "can't be less than 2 chars" }),
     email: z.string().min(1, { message: "can't be blank" }).email(),
     avatar: z.string().url(),
-    bio: z.string().optional()
+    bio: z.string().optional(),
   });
 
   try {
@@ -48,14 +48,14 @@ export async function action({ request }: ActionArgs) {
       email,
       name,
       bio,
-      avatar
+      avatar,
     });
 
     const session = await getSession(request.headers.get("Cookie"));
 
     const userId = session.get("userId");
 
-    const db = new PrismaClient();
+    import { db } from "~/db.server";
 
     await db.user.update({ where: { id: userId }, data: validated });
 
@@ -68,7 +68,7 @@ export async function action({ request }: ActionArgs) {
     return json(
       { errors: {} },
       {
-        status: 400
+        status: 400,
       }
     );
   }

@@ -39,7 +39,7 @@ export async function action({ request }: ActionArgs) {
       password,
     });
 
-    const db = new PrismaClient();
+    import { db } from "~/db.server";
 
     const user = await db.user.create({
       data: {
