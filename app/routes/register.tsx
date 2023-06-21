@@ -30,7 +30,7 @@ export async function action({ request }: ActionArgs) {
       })
   });
 
-  const session = await getSession(request.headers.get("Cookie"));
+  const session = await getSession(request );
 
   try {
     const validated = await CreateUserSchema.parseAsync({

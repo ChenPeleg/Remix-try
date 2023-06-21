@@ -17,7 +17,7 @@ export async function action({ request }: ActionArgs) {
     password: z.string().min(1, { message: "can't be blank" }),
   })
 
-  const session = await getSession(request.headers.get('Cookie'))
+  const session = await getSession(request)
 
   try {
     const validated = await LoginUserSchema.parseAsync({ email, password })

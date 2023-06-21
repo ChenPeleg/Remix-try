@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added logout 2">
-      <change afterPath="$PROJECT_DIR$/app/lib/session.storage.ts" afterDir="false" />
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added logout  refactored get session">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/lib/session.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/session.server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/register.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +94,7 @@
       <workItem from="1686680554878" duration="21000" />
       <workItem from="1686726726483" duration="6870000" />
       <workItem from="1687326127245" duration="185000" />
-      <workItem from="1687328376226" duration="1040000" />
+      <workItem from="1687328376226" duration="1337000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -272,7 +271,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1686735744946</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL‎-00026" summary="added logout  refactored get session">
+      <created>1687329500707</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL‎-00026" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687329500707</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,7 +286,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added navlinks" />
     <MESSAGE value="added is active class" />
     <MESSAGE value="added clsx" />
     <MESSAGE value="added prettier" />
@@ -305,6 +310,7 @@
     <MESSAGE value="worker setting" />
     <MESSAGE value="added logout" />
     <MESSAGE value="added logout 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="added logout 2" />
+    <MESSAGE value="added logout  refactored get session" />
+    <option name="LAST_COMMIT_MESSAGE" value="added logout  refactored get session" />
   </component>
 </project>
