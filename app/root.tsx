@@ -35,7 +35,7 @@ export const links: LinksFunction = () => {
 }
 
 export async function loader({ request }: LoaderArgs) {
-    const session = await getSession(request.headers.get('Cookie'))
+    const session = await getSession(request);
 
     const userId = session.get('userId')
     const successMessage = session.get('success')
