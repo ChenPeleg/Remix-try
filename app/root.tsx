@@ -12,7 +12,7 @@ import {
 } from "@remix-run/react";
 import clsx from "clsx";
 import { commitSession, getSession } from "./lib/session.server";
-import { PrismaClient } from "@prisma/client";
+import { db } from "~/lib/db.server";
 import React from "react";
 
 export const links: LinksFunction = () => {
@@ -44,8 +44,6 @@ export async function loader({ request }: LoaderArgs) {
   let userDTO = null;
 
   if (userId) {
-    import { db } from "~/db.server";
-
     const user = await db.user.findUnique({ where: { id: userId } });
 
     userDTO = {
