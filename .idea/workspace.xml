@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="copied all the files from accessibility-icon.svg site to this site to build just the docs">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/publish-gh-pages.yaml" afterDir="false" />
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added gh pages yaml">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/publish-gh-pages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/publish-gh-pages.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,7 +101,7 @@
       <workItem from="1686680554878" duration="21000" />
       <workItem from="1686726726483" duration="6870000" />
       <workItem from="1687326127245" duration="185000" />
-      <workItem from="1687328376226" duration="3174000" />
+      <workItem from="1687328376226" duration="3533000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -341,7 +341,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1687331504341</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL‎-00035" summary="added gh pages yaml">
+      <created>1687331672594</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL‎-00035" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687331672594</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -349,7 +356,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="installed prisma" />
     <MESSAGE value="added prisma schema" />
     <MESSAGE value="added prisma" />
     <MESSAGE value="added bcrypt and types" />
@@ -374,6 +380,7 @@
     <MESSAGE value="fixed session storage" />
     <MESSAGE value="redirect after succesfull login" />
     <MESSAGE value="copied all the files from accessibility-icon.svg site to this site to build just the docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="copied all the files from accessibility-icon.svg site to this site to build just the docs" />
+    <MESSAGE value="added gh pages yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="added gh pages yaml" />
   </component>
 </project>
