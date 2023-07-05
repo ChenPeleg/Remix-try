@@ -1,22 +1,22 @@
-import { createSessionStorage } from "@remix-run/node";
-import { db } from "./db.server";
+import { createSessionStorage } from '@remix-run/node'
+import { db } from './db.server'
 
 export type SessionData = {
-  userId: number;
-};
+  userId: number
+}
 
 export type SessionFlashData = {
-  error: string;
-  success: string;
-};
+  error: string
+  success: string
+}
 
 const sessionStorage = createSessionStorage<SessionData, SessionFlashData>({
   cookie: {
-    name: "real_world_remix_session",
+    name: 'real_world_remix_session',
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 1000 * 7, // one week
-    path: "/",
-    sameSite: "lax",
+    path: '/',
+    sameSite: 'lax',
     secrets: [process.env.SESSION_SECRET],
     secure: true,
   },
@@ -26,14 +26,14 @@ const sessionStorage = createSessionStorage<SessionData, SessionFlashData>({
         expiresAt: expires!,
         payload: JSON.stringify(data),
       },
-    });
+    })
 
-    return String(id);
+    return String(id)
   },
   async readData(id) {
-    const session = await db.session.findUnique({ where: { id: Number(id) } });
+    const session = await db.session.findUnique({ where: { id: Number(id) } })
 
-    return session?.payload ? JSON.parse(session?.payload) : null;
+    return session?.payload ? JSON.parse(session?.payload) : null
   },
   async updateData(id, data, expires) {
     await db.session.update({
@@ -44,16 +44,16 @@ const sessionStorage = createSessionStorage<SessionData, SessionFlashData>({
         payload: JSON.stringify(data),
         expiresAt: expires,
       },
-    });
+    })
   },
   async deleteData(id) {
-    await db.session.delete({ where: { id: Number(id) } });
+    await db.session.delete({ where: { id: Number(id) } })
   },
-});
+})
 
 export function getSession(request: Request) {
-  return sessionStorage.getSession(request.headers.get("Cookie"));
+  return sessionStorage.getSession(request.headers.get('Cookie'))
 }
 
-export const commitSession = sessionStorage.commitSession;
-export const destroySession = sessionStorage.destroySession;
+export const commitSession = sessionStorage.commitSession
+export const destroySession = sessionStorage.destroySession

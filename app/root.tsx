@@ -1,5 +1,5 @@
-import type { LinksFunction, LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from '@remix-run/node'
+import type { NavLinkProps } from '@remix-run/react'
 import {
   Links,
   LiveReload,
@@ -9,61 +9,68 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-} from "@remix-run/react";
-import clsx from "clsx";
-import { commitSession, getSession } from "./lib/session.server";
-import { db } from "~/lib/db.server";
-import React from "react";
+} from '@remix-run/react'
+import clsx from 'clsx'
+import { getSession } from './lib/session.server'
+import React from 'react'
+import { db } from './lib/db.server'
+import { jsonHash } from 'remix-utils'
+import { getMessages } from './lib/messages.server'
 
 export const links: LinksFunction = () => {
   return [
     {
-      href: "//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css",
-      rel: "stylesheet",
-      type: "text/css",
+      href: '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css',
+      rel: 'stylesheet',
+      type: 'text/css',
     },
     {
-      href: "//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic",
-      rel: "stylesheet",
-      type: "text/css",
+      href: '//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic',
+      rel: 'stylesheet',
+      type: 'text/css',
     },
     {
-      rel: "stylesheet",
-      href: "//demo.productionready.io/main.css",
+      rel: 'stylesheet',
+      href: '//demo.productionready.io/main.css',
     },
-  ];
-};
+  ]
+}
 
 export async function loader({ request }: LoaderArgs) {
-  const session = await getSession(request);
+  const session = await getSession(request)
 
-  const userId = session.get("userId");
-  const successMessage = session.get("success");
-  const errorMessage = session.get("error");
+  const userId = session.get('userId')
 
-  let userDTO = null;
-
-  if (userId) {
-    const user = await db.user.findUnique({ where: { id: userId } });
-
-    userDTO = {
-      id: user?.id,
-      name: user?.name,
-    };
-  }
-
-  return json(
-    {
-      errorMessage,
-      successMessage,
-      user: userDTO,
+  return jsonHash({
+    async messages() {
+      return getMessages(request)
     },
-    { headers: { "Set-Cookie": await commitSession(session) } }
-  );
+    async user() {
+      if (!userId) return
+
+      return db.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+    },
+  })
 }
 
 export default function App() {
-  const loaderData = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>()
+  const [isFlashMessageVisible, setIsFlashMessageVisible] =
+    React.useState(false)
+
+  React.useEffect(() => {
+    if (loaderData.messages.success || loaderData.messages.error) {
+      setIsFlashMessageVisible(true)
+
+      setTimeout(() => setIsFlashMessageVisible(false), 3000)
+    }
+  }, [loaderData.messages.error, loaderData.messages.success])
 
   return (
     <html lang="en">
@@ -81,83 +88,55 @@ export default function App() {
             </a>
             <ul className="nav navbar-nav pull-xs-right">
               <li className="nav-item">
-                <NavLink
-                  className={({ isActive }) =>
-                    clsx("nav-link", isActive && "active")
-                  }
-                  to="/"
-                >
-                  Home
-                </NavLink>
+                <NavbarLink to="/">Home</NavbarLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  className={({ isActive }) =>
-                    clsx("nav-link", isActive && "active")
-                  }
-                  to="/settings"
-                >
-                  Settings
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="">
-                  {" "}
-                  <i className="ion-compose"></i>&nbsp;New Article{" "}
-                </a>
-              </li>
-              {loaderData.user?.id ? (
+              {loaderData.user ? (
                 <>
-                  <NavLink
-                    className={({ isActive }) =>
-                      clsx("nav-link", isActive && "active")
-                    }
-                    to="/logout"
-                  >
-                    Logout
-                  </NavLink>
+                  <li className="nav-item">
+                    <NavbarLink to="/articles/new">
+                      {' '}
+                      <i className="ion-compose"></i>&nbsp;New Article{' '}
+                    </NavbarLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavbarLink to="/settings">Settings</NavbarLink>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#/@romansandler">
+                      <img
+                        className="user-pic"
+                        src="https://api.realworld.io/images/smiley-cyrus.jpeg"
+                        alt=""
+                      />
+                      {loaderData.user?.name}
+                    </a>
+                  </li>
                 </>
               ) : (
                 <>
                   <li className="nav-item">
-                    <NavLink
-                      className={({ isActive }) =>
-                        clsx("nav-link", isActive && "active")
-                      }
-                      to="/login"
-                    >
-                      Sign in
-                    </NavLink>
+                    <NavbarLink to="/login">Sign in</NavbarLink>
                   </li>
-
                   <li className="nav-item">
-                    <NavLink
-                      className={({ isActive }) =>
-                        clsx("nav-link", isActive && "active")
-                      }
-                      to="/register"
-                    >
-                      Sign up
-                    </NavLink>
+                    <NavbarLink to="/register">Sign up</NavbarLink>
                   </li>
                 </>
               )}
             </ul>
           </div>
         </nav>
-        {loaderData?.successMessage ||
-          (loaderData?.errorMessage && (
-            <div
-              className={clsx("alert", {
-                "alert-success": loaderData.successMessage,
-                "alert-danger": loaderData.errorMessage,
-              })}
-              role="alert"
-              style={{ margin: 0, borderRadius: 0 }}
-            >
-              {loaderData.successMessage || loaderData.errorMessage}
-            </div>
-          ))}
+        {isFlashMessageVisible && (
+          <div
+            className={clsx('alert', {
+              'alert-success': loaderData.messages.success,
+              'alert-danger': loaderData.messages.error,
+            })}
+            role="alert"
+            style={{ margin: 0, borderRadius: 0 }}
+          >
+            {loaderData.messages.success || loaderData.messages.error}
+          </div>
+        )}
         <Outlet />
         <footer>
           <div className="container">
@@ -165,7 +144,7 @@ export default function App() {
               conduit
             </a>
             <span className="attribution">
-              An interactive learning project from{" "}
+              An interactive learning project from{' '}
               <a href="https://thinkster.io">Thinkster</a>. Code &amp; design
               licensed under MIT.
             </span>
@@ -176,5 +155,18 @@ export default function App() {
         <LiveReload />
       </body>
     </html>
-  );
+  )
+}
+
+function NavbarLink({ children, className, ...props }: NavLinkProps) {
+  return (
+    <NavLink
+      className={({ isActive }) =>
+        clsx('nav-link', isActive && 'active', className)
+      }
+      {...props}
+    >
+      {children}
+    </NavLink>
+  )
 }

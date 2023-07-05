@@ -1,18 +1,19 @@
-import { ActionArgs, json, redirect } from "@remix-run/node";
-import { Form } from "@remix-run/react";
-import { z } from "zod";
-import bcrypt from "bcryptjs";
-import { db } from "~/lib/db.server";
-
-import { commitSession, getSession } from "~/lib/session.server";
-import { handleExceptions } from "~/lib/http.server";
+import type { ActionArgs } from '@remix-run/node'
+import { redirect } from '@remix-run/node'
+import { Form, Link, useActionData } from '@remix-run/react'
+import { z } from 'zod'
+import bcrypt from 'bcryptjs'
+import { commitSession, getSession } from '~/lib/session.server'
+import { db } from '~/lib/db.server'
+import { handleExceptions } from '~/lib/http.server'
+import { ErrorMessages } from '~/components/error-messages'
 
 export async function action({ request }: ActionArgs) {
-  const formData = await request.formData();
+  const formData = await request.formData()
 
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const name = formData.get('name')
+  const email = formData.get('email')
+  const password = formData.get('password')
 
   const CreateUserSchema = z.object({
     name: z
@@ -27,18 +28,18 @@ export async function action({ request }: ActionArgs) {
       .max(20, { message: "can't be more than 20 chars" })
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/, {
         message:
-          "must contain at least one lower case, one capital case, one number and one symbol",
+          'must contain at least one lower case, one capital case, one number and one symbol',
       }),
-  });
+  })
 
-  const session = await getSession(request);
+  const session = await getSession(request)
 
   try {
     const validated = await CreateUserSchema.parseAsync({
       name,
       email,
       password,
-    });
+    })
 
     const user = await db.user.create({
       data: {
@@ -46,29 +47,32 @@ export async function action({ request }: ActionArgs) {
         name: validated.name,
         password: await bcrypt.hash(validated.password, 10),
       },
-    });
+    })
 
-    session.set("userId", user.id);
+    session.set('userId', user.id)
 
     session.flash(
-      "success",
-      "You are now successfully registered! Welcome to Conduit"
-    );
+      'success',
+      'You are now successfully registered! Welcome to Conduit'
+    )
 
-    return redirect("/", {
+    return redirect('/', {
       headers: {
-        "Set-Cookie": await commitSession(session),
+        'Set-Cookie': await commitSession(session),
       },
-    });
+    })
   } catch (error) {
-    session.flash("error", "Registration failed");
-    session.flash("error", "Login failed");
+    session.flash('error', 'Registration failed')
 
-    return handleExceptions(error);
+    await commitSession(session)
+
+    return handleExceptions(error)
   }
 }
 
 export default function Register() {
+  const actionData = useActionData<typeof action>()
+
   return (
     <div className="auth-page">
       <div className="container page">
@@ -76,28 +80,24 @@ export default function Register() {
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign up</h1>
             <p className="text-xs-center">
-              <a href="">Have an account?</a>
+              <Link to="/login">Have an account?</Link>
             </p>
-
-            <ul className="error-messages">
-              <li>That email is already taken</li>
-            </ul>
-
-            <Form method={"post"}>
+            {actionData && <ErrorMessages errors={actionData.errors} />}
+            <Form method="POST">
               <fieldset className="form-group">
                 <input
                   className="form-control form-control-lg"
                   type="text"
                   placeholder="Your Name"
-                  name={"name"}
+                  name="name"
                 />
               </fieldset>
               <fieldset className="form-group">
                 <input
                   className="form-control form-control-lg"
-                  type="text"
+                  type="email"
                   placeholder="Email"
-                  name={"email"}
+                  name="email"
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -105,7 +105,7 @@ export default function Register() {
                   className="form-control form-control-lg"
                   type="password"
                   placeholder="Password"
-                  name={"password"}
+                  name="password"
                 />
               </fieldset>
               <button className="btn btn-lg btn-primary pull-xs-right">
@@ -116,5 +116,5 @@ export default function Register() {
         </div>
       </div>
     </div>
-  );
+  )
 }
