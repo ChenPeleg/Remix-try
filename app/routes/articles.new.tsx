@@ -1,8 +1,26 @@
 import { Form } from "@remix-run/react";
-import { ActionArgs } from "@remix-run/node";
+import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
 import z from "zod";
 import { handleExceptions } from "~/lib/http.server";
+import { db } from "~/lib/db.server";
+import { jsonHash } from "remix-utils";
 
+export async function loader({ request }: LoaderArgs) {
+  return jsonHash({
+    async articles() {
+      return db.article.findMany({
+        include: {
+          author: {
+            select: {
+              avatar: true,
+              name: true,
+            },
+          },
+        },
+      });
+    },
+  });
+}
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
 
@@ -21,9 +39,20 @@ export async function action({ request }: ActionArgs) {
       description,
       body,
     });
+    const article = await db.article.create({
+      data: {
+        body: validated.body,
+        description: validated.description,
+        title: validated.title,
+        author: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
 
-    // write the data to the db
-    // send an http response back
+    return redirect("/");
   } catch (error) {
     return handleExceptions(error);
   }

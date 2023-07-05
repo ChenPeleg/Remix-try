@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added validation">
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="changed prisma schema">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/articles.new.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/articles.new.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/dev.db" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/dev.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +103,7 @@
       <workItem from="1686726726483" duration="6870000" />
       <workItem from="1687326127245" duration="185000" />
       <workItem from="1687328376226" duration="4275000" />
-      <workItem from="1688581170104" duration="458000" />
+      <workItem from="1688581170104" duration="650000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -387,7 +388,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1688581560533</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL‎-00041" summary="changed prisma schema">
+      <option name="closed" value="true" />
+      <created>1688581653553</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL‎-00041" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1688581653553</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -395,7 +404,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added session server ts" />
     <MESSAGE value="added the register user action" />
     <MESSAGE value="added login" />
     <MESSAGE value="added to the root" />
@@ -420,6 +428,7 @@
     <MESSAGE value="added new article" />
     <MESSAGE value="added new article  name={'description'}" />
     <MESSAGE value="added validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added validation" />
+    <MESSAGE value="changed prisma schema" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed prisma schema" />
   </component>
 </project>
