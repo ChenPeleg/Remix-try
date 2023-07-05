@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="changed prisma schema">
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added loader">
+      <change afterPath="$PROJECT_DIR$/app/settings.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/lib/auth.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/auth.server.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/articles.new.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/articles.new.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/dev.db" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/dev.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +106,7 @@
       <workItem from="1686726726483" duration="6870000" />
       <workItem from="1687326127245" duration="185000" />
       <workItem from="1687328376226" duration="4275000" />
-      <workItem from="1688581170104" duration="650000" />
+      <workItem from="1688581170104" duration="1006000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -396,7 +399,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1688581653553</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL‎-00042" summary="added loader">
+      <option name="closed" value="true" />
+      <created>1688581837722</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL‎-00042" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1688581837722</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,7 +415,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added the register user action" />
     <MESSAGE value="added login" />
     <MESSAGE value="added to the root" />
     <MESSAGE value="added props to the prisma schema" />
@@ -429,6 +439,7 @@
     <MESSAGE value="added new article  name={'description'}" />
     <MESSAGE value="added validation" />
     <MESSAGE value="changed prisma schema" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed prisma schema" />
+    <MESSAGE value="added loader" />
+    <option name="LAST_COMMIT_MESSAGE" value="added loader" />
   </component>
 </project>

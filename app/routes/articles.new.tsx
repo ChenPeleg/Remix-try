@@ -1,36 +1,34 @@
-import { Form } from "@remix-run/react";
-import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
-import z from "zod";
-import { handleExceptions } from "~/lib/http.server";
+import type { LoaderArgs } from "@remix-run/node";
+import { redirect, type ActionArgs } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
+import { z } from "zod";
+import { ErrorMessages } from "~/components/error-messages";
+import { currentUserId, requireLogin } from "~/lib/auth.server";
 import { db } from "~/lib/db.server";
-import { jsonHash } from "remix-utils";
+import { handleExceptions } from "~/lib/http.server";
+import { addMessage } from "~/lib/messages.server";
+import { useListData } from "@react-stately/data";
+import React from "react";
 
 export async function loader({ request }: LoaderArgs) {
-  return jsonHash({
-    async articles() {
-      return db.article.findMany({
-        include: {
-          author: {
-            select: {
-              avatar: true,
-              name: true,
-            },
-          },
-        },
-      });
-    },
-  });
+  await requireLogin(request);
+
+  return null;
 }
+
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
 
   const title = formData.get("title");
   const description = formData.get("description");
   const body = formData.get("body");
+  const tags = formData.getAll("tag");
+
   const ArticleSchema = z.object({
     title: z.string().min(1, { message: "can't be blank" }),
     description: z.string().min(1, { message: "can't be blank" }),
     body: z.string().min(1, { message: "can't be blank" }),
+    tags: z.array(z.string()).optional(),
   });
 
   try {
@@ -38,7 +36,11 @@ export async function action({ request }: ActionArgs) {
       title,
       description,
       body,
+      tags,
     });
+
+    const userId = await currentUserId(request);
+
     const article = await db.article.create({
       data: {
         body: validated.body,
@@ -49,30 +51,45 @@ export async function action({ request }: ActionArgs) {
             id: userId,
           },
         },
+        tags: {
+          connectOrCreate: validated.tags?.map((tag) => ({
+            create: {
+              title: tag,
+            },
+            where: {
+              title: tag,
+            },
+          })),
+        },
       },
     });
+
+    await addMessage(
+      request,
+      "success",
+      `Article "${article.title}" was created successfully`
+    );
 
     return redirect("/");
   } catch (error) {
     return handleExceptions(error);
   }
-
-  // validate the form data
-  // write the data to the db
-  // send an http response back
 }
 
 export default function ArticlesNew() {
+  const actionData = useActionData<typeof action>();
+
   return (
     <div className="editor-page">
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            <Form>
+            <ErrorMessages errors={actionData?.errors} />
+            <Form method="POST">
               <fieldset>
                 <fieldset className="form-group">
                   <input
-                    name={"title"}
+                    name="title"
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Article Title"
@@ -80,7 +97,7 @@ export default function ArticlesNew() {
                 </fieldset>
                 <fieldset className="form-group">
                   <input
-                    name={"description"}
+                    name="description"
                     type="text"
                     className="form-control"
                     placeholder="What's this article about?"
@@ -88,24 +105,14 @@ export default function ArticlesNew() {
                 </fieldset>
                 <fieldset className="form-group">
                   <textarea
-                    name={"description"}
+                    name="body"
                     className="form-control"
                     rows={8}
                     placeholder="Write your article (in markdown)"
                   ></textarea>
                 </fieldset>
-                <fieldset className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Enter tags"
-                  />
-                  <div className="tag-list"></div>
-                </fieldset>
-                <button
-                  className="btn btn-lg pull-xs-right btn-primary"
-                  type="button"
-                >
+                <TagsField />
+                <button className="btn btn-lg pull-xs-right btn-primary">
                   Publish Article
                 </button>
               </fieldset>
@@ -114,5 +121,42 @@ export default function ArticlesNew() {
         </div>
       </div>
     </div>
+  );
+}
+
+function TagsField() {
+  let [value, setValue] = React.useState("");
+  const selectedTags = useListData<{ id: string }>({
+    initialItems: [],
+  });
+
+  return (
+    <fieldset className="form-group">
+      <input
+        value={value}
+        onChange={(e) => setValue(e.currentTarget.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            setValue("");
+            selectedTags.append({ id: e.currentTarget.value });
+          }
+        }}
+        className="form-control"
+        placeholder="Enter tags"
+      />
+      <div className="tag-list">
+        {selectedTags.items.map((tag) => (
+          <span key={tag.id} className="tag-default tag-pill">
+            <input value={tag.id} type="hidden" name="tag" />
+            <i
+              onClick={() => selectedTags.remove(tag.id)}
+              className="ion-close-round"
+            ></i>
+            {tag.id}
+          </span>
+        ))}
+      </div>
+    </fieldset>
   );
 }
