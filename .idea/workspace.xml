@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="added gh pages yaml">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/publish-gh-pages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/publish-gh-pages.yml" afterDir="false" />
+    <list default="true" id="aa406815-499e-4aa9-8329-dd12d90bbff5" name="Changes" comment="changed documents to docs">
+      <change afterPath="$PROJECT_DIR$/app/routes/articles.new.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,30 +37,30 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "code.cleanup.on.save": "true",
-    "last_opened_file_path": "C:/Projects/Remix-try",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Projects\\Remix-try\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "settings.editor.splitter.proportion": "0.29429734",
-    "ts.external.directory.path": "C:\\Projects\\Remix-try\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Projects/Remix-try&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Projects\\Remix-try\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.29429734&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Projects\\Remix-try\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "ECMAScript 6"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;ECMAScript 6&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Projects\Remix-try" />
@@ -101,7 +101,8 @@
       <workItem from="1686680554878" duration="21000" />
       <workItem from="1686726726483" duration="6870000" />
       <workItem from="1687326127245" duration="185000" />
-      <workItem from="1687328376226" duration="3533000" />
+      <workItem from="1687328376226" duration="4275000" />
+      <workItem from="1688581170104" duration="131000" />
     </task>
     <task id="LOCAL‎-00001" summary="added navlinks">
       <created>1684396630750</created>
@@ -348,7 +349,21 @@
       <option name="project" value="LOCAL‎" />
       <updated>1687331672594</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL‎-00036" summary="copy all files to site">
+      <created>1687332087937</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL‎-00036" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687332087937</updated>
+    </task>
+    <task id="LOCAL‎-00037" summary="changed documents to docs">
+      <created>1687332137481</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL‎-00037" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687332137481</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,8 +371,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added prisma schema" />
-    <MESSAGE value="added prisma" />
     <MESSAGE value="added bcrypt and types" />
     <MESSAGE value="added bcrypt and types 2" />
     <MESSAGE value="added settings" />
@@ -381,6 +394,8 @@
     <MESSAGE value="redirect after succesfull login" />
     <MESSAGE value="copied all the files from accessibility-icon.svg site to this site to build just the docs" />
     <MESSAGE value="added gh pages yaml" />
-    <option name="LAST_COMMIT_MESSAGE" value="added gh pages yaml" />
+    <MESSAGE value="copy all files to site" />
+    <MESSAGE value="changed documents to docs" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed documents to docs" />
   </component>
 </project>
