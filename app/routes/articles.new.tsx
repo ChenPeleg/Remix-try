@@ -1,4 +1,37 @@
 import { Form } from "@remix-run/react";
+import { ActionArgs } from "@remix-run/node";
+import z from "zod";
+import { handleExceptions } from "~/lib/http.server";
+
+export async function action({ request }: ActionArgs) {
+  const formData = await request.formData();
+
+  const title = formData.get("title");
+  const description = formData.get("description");
+  const body = formData.get("body");
+  const ArticleSchema = z.object({
+    title: z.string().min(1, { message: "can't be blank" }),
+    description: z.string().min(1, { message: "can't be blank" }),
+    body: z.string().min(1, { message: "can't be blank" }),
+  });
+
+  try {
+    const validated = await ArticleSchema.parseAsync({
+      title,
+      description,
+      body,
+    });
+
+    // write the data to the db
+    // send an http response back
+  } catch (error) {
+    return handleExceptions(error);
+  }
+
+  // validate the form data
+  // write the data to the db
+  // send an http response back
+}
 
 export default function ArticlesNew() {
   return (
