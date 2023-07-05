@@ -1,13 +1,16 @@
+import { Form } from "@remix-run/react";
+
 export default function ArticlesNew() {
   return (
     <div className="editor-page">
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            <form>
+            <Form>
               <fieldset>
                 <fieldset className="form-group">
                   <input
+                    name={"title"}
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Article Title"
@@ -15,6 +18,7 @@ export default function ArticlesNew() {
                 </fieldset>
                 <fieldset className="form-group">
                   <input
+                    name={"description"}
                     type="text"
                     className="form-control"
                     placeholder="What's this article about?"
@@ -22,6 +26,7 @@ export default function ArticlesNew() {
                 </fieldset>
                 <fieldset className="form-group">
                   <textarea
+                    name={"description"}
                     className="form-control"
                     rows={8}
                     placeholder="Write your article (in markdown)"
@@ -42,7 +47,7 @@ export default function ArticlesNew() {
                   Publish Article
                 </button>
               </fieldset>
-            </form>
+            </Form>
           </div>
         </div>
       </div>
